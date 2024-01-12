@@ -1,16 +1,16 @@
 import React from 'react';
-import './Popular.css'
-import data_product from '../Assets/data';
+import './NewCollections.css'
+import new_collections from '../Assets/new_collections';
 import Item from '../Item/Item';
 
-function Popular() {
+function NewCollections(props) {
   return (
-    <div className='popular'>
-      <h1>POPULAR IN WOMEN</h1>
+    <div className='new-collections'>
+      <h1>NEW COLLECTIONS</h1>
       <hr />
-      <div className="popular-item">
+      <div className="new-collections-item">
         {
-          data_product.map((item, index) => {
+          new_collections.map((item, index) => {
             return <Item 
              key={index}
              id={item.id} 
@@ -26,4 +26,4 @@ function Popular() {
   );
 }
 
-export default Popular;
+export default NewCollections;
