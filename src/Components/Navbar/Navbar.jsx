@@ -1,21 +1,32 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../../Context/ShopContext';
+import nav_dropdown from '../Assets/nav_dropdown.png';
 
 function Navbar() {
   const [menu, setMenu] = useState('shop');
-  const { getTotalCartNumberFn, cartItems } = useContext(ShopContext);
+  const { getTotalCartNumberFn } = useContext(ShopContext);
+  const menuRef = useRef();
+
+  const dropdownToggle = () => {
+    menuRef.current.classList.toggle('nav-menu-visible');
+  };
 
   return (
     <div className="navbar">
       <div className="nav-logo">
-        <img src={logo} alt="" />
-        <p>Fam Store</p>
+        <Link to="/">
+          <img src={logo} alt="" />
+        </Link>
+        <Link to="/">
+          <p>Fam Store</p>
+        </Link>
       </div>
-      <ul className="nav-menu">
+
+      <ul ref={menuRef} className="nav-menu">
         <li
           onClick={() => {
             setMenu('shop');
@@ -52,8 +63,15 @@ function Navbar() {
         <Link to="/cart">
           <img src={cart_icon} alt="" />
         </Link>
-        <div className="nav-cart-count">{getTotalCartNumberFn(cartItems)}</div>
+        <div className="nav-cart-count">{getTotalCartNumberFn()}</div>
       </div>
+
+      <img
+        className="nav-dropdown"
+        onClick={dropdownToggle}
+        src={nav_dropdown}
+        alt=""
+      />
     </div>
   );
 }

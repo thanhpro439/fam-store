@@ -22,7 +22,7 @@ const ShopContextProdiver = (props) => {
     });
   };
 
-  const getTotalCartNumberFn = (cartItems) => {
+  const getTotalCartNumberFn = () => {
     return Object.values(cartItems).reduce((pre,current)=>pre+current,0)
   };
 
