@@ -24,3 +24,45 @@
   margin-top: 50px;
   gap: 30px;
 }
+
+
+@media (max-width: 1280px) {
+  .new-collections h1 {
+    font-size: 40px;
+  }
+
+  .new-collections-item {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .new-collections h1 {
+    font-size: 30px;
+  }
+
+  .new-collections-item {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 800px) {
+  .new-collections h1 {
+    font-size: 24px;
+  }
+
+  .new-collections-item {
+    gap: 10px;
+  }
+
+  .new-collections-item {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .new-collections-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
