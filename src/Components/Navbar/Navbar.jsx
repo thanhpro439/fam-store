@@ -30,6 +30,7 @@ function Navbar() {
         <li
           onClick={() => {
             setMenu('shop');
+            dropdownToggle();
           }}
         >
           <Link to="/">Shop</Link> {menu === 'shop' ? <hr /> : <></>}
@@ -37,6 +38,7 @@ function Navbar() {
         <li
           onClick={() => {
             setMenu('men');
+            dropdownToggle();
           }}
         >
           <Link to="/men">Men</Link> {menu === 'men' ? <hr /> : <></>}
@@ -44,6 +46,7 @@ function Navbar() {
         <li
           onClick={() => {
             setMenu('women');
+            dropdownToggle();
           }}
         >
           <Link to="/women">Women</Link> {menu === 'women' ? <hr /> : <></>}
@@ -51,6 +54,7 @@ function Navbar() {
         <li
           onClick={() => {
             setMenu('kids');
+            dropdownToggle();
           }}
         >
           <Link to="/kids">Kids</Link> {menu === 'kids' ? <hr /> : <></>}
