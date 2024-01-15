@@ -25,3 +25,44 @@
   gap: 50px;
   row-gap: 80px;
 }
+
+@media (max-width: 1366px) {
+  .relatedproducts h1 {
+    font-size: 40px;
+  }
+
+  .relatedproducts-item {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .relatedproducts h1 {
+    font-size: 30px;
+  }
+
+  .relatedproducts-item {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 800px) {
+  .relatedproducts h1 {
+    font-size: 24px;
+  }
+
+  .relatedproducts-item {
+    gap: 10px;
+  }
+
+  .relatedproducts-item {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .relatedproducts-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
