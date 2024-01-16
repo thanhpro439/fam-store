@@ -1,10 +1,12 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const multer = require('multer');
-const path = require('path');
-const cors = require('cors');
-const port = 5000;
+import express from 'express';
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import multer from 'multer';
+import path from 'path';
+import cors from 'cors';
+
+const port = 5001;
+import { env } from './config/environment.js';
 
 const app = express();
 
@@ -14,15 +16,9 @@ app.use(express.json());
 // Using cors middleware
 app.use(cors());
 
-// Connect Mongoose database
 mongoose.connect(
-  'mongodb+srv://thanhramen439:Tuanthanh439@famstore.bc1gtb2.mongodb.net/famstore'
+  `mongodb+srv://${env.DB_USER}:${env.DB_PASSWORD}@famstore.bc1gtb2.mongodb.net/famstore`
 );
-
-// API Creation
-app.get('/', (req, res) => {
-  res.send('Express App is running');
-});
 
 // Image storage engine
 const storage = multer.diskStorage({
@@ -38,14 +34,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Create upload endpoint for images
-app.use('/images', express.static('/upload/images'));
+app.use('/images', express.static('upload/images'));
 app.post('/upload', upload.single('product'), (req, res) => {
-  // Get the server address and port from the req object
-  // const serverAddress = `${req.protocol}://${req.get('host')}`;
-
-  // Create the URL for the uploaded image using the server address and port
-  // const imageUrl = `${serverAddress}/images/${req.file.filename}`;
-
   res.json({
     success: 1,
     image_url: `http://localhost:${port}/images/${req.file.filename}`,
@@ -159,6 +149,11 @@ app.get('/allproducts', async (req, res) => {
       console.error('Error finding products:', error);
       res.status(500).send({ error: 'Internal Server Error' });
     });
+});
+
+// API Creation
+app.get('/', (req, res) => {
+  res.send('Express App is running');
 });
 
 app.listen(port, (e) => {
