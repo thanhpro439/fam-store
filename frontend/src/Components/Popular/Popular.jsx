@@ -5,7 +5,7 @@ import Item from '../Item/Item';
 function Popular() {
   const [popular, setPopular] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:4000/popular')
+    fetch('https://famstorebackend.onrender.com/popular')
       .then((res) => res.json())
       .then((data) => setPopular(data));
   }, []);

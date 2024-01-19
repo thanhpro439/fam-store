@@ -15,7 +15,7 @@ function LoginSignup(props) {
 
   const login = async () => {
     let resData;
-    await fetch('http://localhost:4000/login', {
+    await fetch('https://famstorebackend.onrender.com/login', {
       method: 'POST',
       headers: {
         Accept: 'application/form-data',
@@ -37,7 +37,7 @@ function LoginSignup(props) {
   const signup = async () => {
     let resData;
     console.log(formData);
-    await fetch('http://localhost:4000/signup', {
+    await fetch('https://famstorebackend.onrender.com/signup', {
       method: 'POST',
       headers: {
         Accept: 'application/form-data',

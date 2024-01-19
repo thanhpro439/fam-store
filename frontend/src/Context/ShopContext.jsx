@@ -7,12 +7,12 @@ const ShopContextProdiver = (props) => {
   const [all_product, setAll_product] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/allproducts')
+    fetch('https://famstorebackend.onrender.com/allproducts')
       .then((res) => res.json())
       .then((data) => setAll_product(data));
 
     if (localStorage.getItem('auth-token')) {
-      fetch('http://localhost:4000/getcart', {
+      fetch('https://famstorebackend.onrender.com/getcart', {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -34,7 +34,7 @@ const ShopContextProdiver = (props) => {
 
     // check login or not
     if (localStorage.getItem('auth-token')) {
-      fetch('http://localhost:4000/addtocart', {
+      fetch('https://famstorebackend.onrender.com/addtocart', {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -58,7 +58,7 @@ const ShopContextProdiver = (props) => {
 
     // check login or not
     if (localStorage.getItem('auth-token')) {
-      fetch('http://localhost:4000/removefromcart', {
+      fetch('https://famstorebackend.onrender.com/removefromcart', {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',

@@ -26,7 +26,7 @@ function AddProduct(props) {
     let formData = new FormData();
     formData.append('product', image);
 
-    await fetch('http://localhost:4000/upload', {
+    await fetch('https://famstorebackend.onrender.com/upload', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -39,7 +39,7 @@ function AddProduct(props) {
     if (resData.success) {
       product.image = resData.image_url;
       console.log('product: ', productDetails);
-      await fetch('http://localhost:4000/addproduct', {
+      await fetch('https://famstorebackend.onrender.com/addproduct', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

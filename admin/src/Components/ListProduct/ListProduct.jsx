@@ -7,7 +7,7 @@ function ListProduct(props) {
 
   const fetchInfo = async () => {
     try {
-      const res = await fetch('http://localhost:4000/allproducts');
+      const res = await fetch('https://famstorebackend.onrender.com/allproducts');
       const data = await res.json();
       setAllProduct(data);
     } catch (error) {
@@ -17,7 +17,7 @@ function ListProduct(props) {
 
   const remove_product = async (id) => {
     try {
-      await fetch('http://localhost:4000/removeproduct', {
+      await fetch('https://famstorebackend.onrender.com/removeproduct', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

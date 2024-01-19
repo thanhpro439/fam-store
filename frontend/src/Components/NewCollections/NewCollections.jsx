@@ -6,7 +6,7 @@ function NewCollections(props) {
   const [newCollections, setNewCollections] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/newcollection')
+    fetch('https://famstorebackend.onrender.com/newcollection')
       .then((res) => res.json())
       .then((data) => setNewCollections(data));
   }, []);
