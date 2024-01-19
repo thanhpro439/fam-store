@@ -10,6 +10,7 @@ function Admin(props) {
     <div className="admin">
       <Sidebar />
       <Routes>
+        <Route path="/" element={<AddProduct />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/allproduct" element={<ListProduct />} />
       </Routes>

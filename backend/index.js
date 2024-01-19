@@ -7,7 +7,6 @@ import cors from 'cors';
 
 const port = 4000;
 import { env } from './config/environment.js';
-import { fail } from 'assert';
 
 const app = express();
 
@@ -45,7 +44,7 @@ app.post('/upload', upload.single('product'), (req, res) => {
 
 // Schema for creating new User
 const Users = mongoose.model('User', {
-  name: {
+  username: {
     type: String,
   },
   email: {
@@ -73,14 +72,14 @@ app.post('/signup', async (req, res) => {
       error: 'Existing user!',
     });
   }
-  let cart = {};
-  const MAXITEM = 300;
-  for (let i = 0; i < MAXITEM; i++) {
-    cart[i] = 0;
-  }
+  let cart = { 0: 0 };
+  // const MAXITEM = 300;
+  // for (let i = 0; i < MAXITEM; i++) {
+  //   cart[i] = 0;
+  // }
 
   const user = new Users({
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
     cartData: cart,
@@ -227,6 +226,90 @@ app.get('/allproducts', async (req, res) => {
       console.error('Error finding products:', error);
       res.status(500).send({ error: 'Internal Server Error' });
     });
+});
+
+// Creating API for getting new collection product endpoint
+app.get('/newcollection', async (req, res) => {
+  try {
+    let allproduct = await Product.find({});
+    if (allproduct.length > 8) {
+      let newcollection = allproduct.slice(-8).reverse();
+      res.send(newcollection);
+    } else {
+      res.send(allproduct);
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+// Creating API for getting popular women product endpoint
+app.get('/popular', async (req, res) => {
+  try {
+    let popularItems = await Product.find({ category: 'women' });
+    if (popularItems.length > 4) {
+      let popular = popularItems.slice(0, 4);
+      res.send(popular);
+    } else {
+      res.send(popularItems);
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+// Creating middlerware to fetch user
+const fetchUser = async (req, res, next) => {
+  const token = req.header('auth-token');
+  if (!token) {
+    res.status(401).send({ error: 'Please authenticate with a valid token' });
+  } else {
+    try {
+      const data = jwt.verify(token, 'secret_ecom');
+      req.user = data.user;
+      next();
+    } catch (error) {
+      res.status(401).send({ error: 'Please authenticate with a valid token' });
+    }
+  }
+};
+// Creating endpoint for add to cart endpoint
+app.post('/addtocart', fetchUser, async (req, res) => {
+  let userData = await Users.findOne({ _id: req.user.id });
+  if (userData) {
+    userData.cartData[req.body.itemId] =
+      (userData.cartData[req.body.itemId] || 0) + 1;
+    await Users.findOneAndUpdate(
+      { _id: req.user.id },
+      { cartData: userData.cartData }
+    );
+    res.send({ message: 'Added' });
+  } else {
+    res.send({ message: 'No user found' });
+  }
+});
+
+// Creating endpoint for remove from cart endpoint
+app.post('/removefromcart', fetchUser, async (req, res) => {
+  let userData = await Users.findOne({ _id: req.user.id });
+  if (userData) {
+    if (userData.cartData[req.body.itemId] > 0) {
+      userData.cartData[req.body.itemId] -= 1;
+    }
+    await Users.findOneAndUpdate(
+      { _id: req.user.id },
+      { cartData: userData.cartData }
+    );
+    res.send({ message: 'Removed' });
+  } else {
+    res.send({ message: 'No user found' });
+  }
+});
+
+// Creating endpoint for get cart
+app.post('/getcart', fetchUser, async (req, res) => {
+  let userData = await Users.findOne({ _id: req.user.id });
+  res.json(userData.cartData);
 });
 
 // API Creation
