@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken';
 import multer from 'multer';
 import path from 'path';
 import cors from 'cors';
+import { env } from './config/environment.js';
 
 const port = 4000;
-import { env } from './config/environment.js';
 
 const app = express();
 
@@ -36,6 +36,7 @@ const upload = multer({ storage: storage });
 // Create upload endpoint for images
 app.use('/images', express.static('upload/images'));
 app.post('/upload', upload.single('product'), (req, res) => {
+  console.log(req.file);
   res.json({
     success: 1,
     image_url: `https://famstorebackend.onrender.com/images/${req.file.filename}`,
