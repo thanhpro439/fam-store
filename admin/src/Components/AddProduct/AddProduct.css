@@ -23,7 +23,7 @@
   border: 1px solid #c3c3c3;
   outline: none;
   color: #7b7b7b;
-  font-size: "Poppins";
+  font-size: 'Poppins';
   font-size: 14px;
 }
 
@@ -65,6 +65,11 @@
 
   font-size: 16px;
   font-weight: 500;
+}
+
+.disabled-button {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (max-width: 800px) {

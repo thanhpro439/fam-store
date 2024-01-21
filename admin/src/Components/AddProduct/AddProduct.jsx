@@ -4,6 +4,8 @@ import upload_area from '../../assets/upload_area.svg';
 
 function AddProduct(props) {
   const [image, setImage] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+
   const imageUploadHandle = (e) => {
     setImage(e.target.files[0]);
   };
@@ -11,6 +13,7 @@ function AddProduct(props) {
   const [productDetails, setProductDetails] = useState({
     name: '',
     image: '',
+    image_public_id: '',
     category: 'women',
     new_price: '',
     old_price: '',
@@ -20,13 +23,14 @@ function AddProduct(props) {
   };
 
   const Add_product = async () => {
+    setIsAdding(true);
     let resData;
     let product = productDetails;
 
     let formData = new FormData();
     formData.append('product', image);
 
-    await fetch('https://famstorebackend.onrender.com/upload', {
+    await fetch('https://backend-lpgv.onrender.com/api/upload', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -34,12 +38,13 @@ function AddProduct(props) {
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => (resData = data));
+      .then((data) => (resData = data))
+      .catch((error) => console.log(error));
 
     if (resData.success) {
-      product.image = resData.image_url;
-      console.log('product: ', productDetails);
-      await fetch('https://famstorebackend.onrender.com/addproduct', {
+      product.image = resData.data.secure_url;
+      product.image_public_id = resData.data.public_id;
+      await fetch('https://backend-lpgv.onrender.com/api/products/addproduct', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -52,7 +57,12 @@ function AddProduct(props) {
           data.success
             ? alert('Add product successfully.')
             : alert('Failed to add product. Please try again.')
-        );
+        )
+        .then(() => setIsAdding(false))
+        .catch((error) => {
+          console.log(error);
+          setIsAdding(false);
+        });
     }
   };
 
@@ -130,7 +140,10 @@ function AddProduct(props) {
         onClick={() => {
           Add_product();
         }}
-        className="addproduct-btn"
+        disabled={isAdding}
+        className={
+          isAdding ? 'addproduct-btn disabled-button' : 'addproduct-btn'
+        }
       >
         Add
       </button>

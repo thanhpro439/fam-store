@@ -7,7 +7,7 @@ function ListProduct(props) {
 
   const fetchInfo = async () => {
     try {
-      const res = await fetch('https://famstorebackend.onrender.com/allproducts');
+      const res = await fetch('https://backend-lpgv.onrender.com/api/products/allproducts');
       const data = await res.json();
       setAllProduct(data);
     } catch (error) {
@@ -17,7 +17,18 @@ function ListProduct(props) {
 
   const remove_product = async (id) => {
     try {
-      await fetch('https://famstorebackend.onrender.com/removeproduct', {
+      // delete image of this product
+      await fetch('https://backend-lpgv.onrender.com/api/delete', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id }),
+      });
+
+      // delete product in database
+      await fetch('https://backend-lpgv.onrender.com/api/products/removeproduct', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
