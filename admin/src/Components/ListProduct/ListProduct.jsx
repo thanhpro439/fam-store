@@ -7,7 +7,9 @@ function ListProduct(props) {
 
   const fetchInfo = async () => {
     try {
-      const res = await fetch('https://backend-lpgv.onrender.com/api/products/allproducts');
+      const res = await fetch(
+        'https://backend-lpgv.onrender.com/api/products/allproducts'
+      );
       const data = await res.json();
       setAllProduct(data);
     } catch (error) {
@@ -28,14 +30,17 @@ function ListProduct(props) {
       });
 
       // delete product in database
-      await fetch('https://backend-lpgv.onrender.com/api/products/removeproduct', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: id }),
-      });
+      await fetch(
+        'https://backend-lpgv.onrender.com/api/products/removeproduct',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: id }),
+        }
+      );
 
       // update list product
       await fetchInfo();
@@ -74,8 +79,8 @@ function ListProduct(props) {
                 className="listproduct-product-image"
               />
               <p>{product.name}</p>
-              <p>${product.old_price}</p>
-              <p>${product.new_price}</p>
+              <p>{product.old_price}đ</p>
+              <p>{product.new_price}đ</p>
               <p>{product.category}</p>
               <img
                 src={remove_icon}

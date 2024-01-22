@@ -31,9 +31,11 @@
   align-items: center;
   list-style: none;
   gap: 50px;
+
   color: #626262;
   font-size: 20px;
   font-weight: 500;
+  text-transform: uppercase;
 }
 
 .nav-menu li {

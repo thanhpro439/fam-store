@@ -14,7 +14,7 @@ function AddProduct(props) {
     name: '',
     image: '',
     image_public_id: '',
-    category: 'women',
+    category: 'figure',
     new_price: '',
     old_price: '',
   });
@@ -112,9 +112,9 @@ function AddProduct(props) {
           className="add-product-selector"
           id=""
         >
-          <option value="women">Women</option>
-          <option value="men">Men</option>
-          <option value="kid">Kid</option>
+          <option value="figure">Figure</option>
+          <option value="naruto">Naruto</option>
+          <option value="tokyorevengers">Tokyo Revengers</option>
         </select>
       </div>
 

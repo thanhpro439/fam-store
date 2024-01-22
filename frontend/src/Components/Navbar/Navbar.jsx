@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
@@ -8,6 +8,8 @@ import nav_dropdown from '../Assets/nav_dropdown.png';
 
 function Navbar() {
   const [menu, setMenu] = useState('shop');
+  const { menuList } = useContext(ShopContext);
+
   const { getTotalCartNumberFn } = useContext(ShopContext);
   const menuRef = useRef();
 
@@ -35,31 +37,20 @@ function Navbar() {
         >
           <Link to="/">Shop</Link> {menu === 'shop' ? <hr /> : <></>}
         </li>
-        <li
-          onClick={() => {
-            setMenu('men');
-            dropdownToggle();
-          }}
-        >
-          <Link to="/men">Men</Link> {menu === 'men' ? <hr /> : <></>}
-        </li>
-        <li
-          onClick={() => {
-            setMenu('women');
-            dropdownToggle();
-          }}
-        >
-          <Link to="/women">Women</Link> {menu === 'women' ? <hr /> : <></>}
-        </li>
-        <li
-          onClick={() => {
-            setMenu('kids');
-            dropdownToggle();
-          }}
-        >
-          <Link to="/kids">Kids</Link> {menu === 'kids' ? <hr /> : <></>}
-        </li>
+        {menuList.map((item, index) => (
+          <li
+            key={index}
+            onClick={() => {
+              setMenu(item.category);
+              dropdownToggle();
+            }}
+          >
+            <Link to={`/${item.category}`}>{item.category}</Link>{' '}
+            {menu === item.category ? <hr /> : <></>}
+          </li>
+        ))}
       </ul>
+      
       <div className="nav-login-cart">
         {localStorage.getItem('auth-token') ? (
           <button

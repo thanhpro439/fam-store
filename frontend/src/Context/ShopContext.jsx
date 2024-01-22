@@ -5,6 +5,7 @@ export const ShopContext = createContext(null);
 const ShopContextProdiver = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [all_product, setAll_product] = useState([]);
+  const [menuList, setMenuList] = useState([]);
 
   useEffect(() => {
     fetch('https://famstorebackend.onrender.com/allproducts')
@@ -24,6 +25,18 @@ const ShopContextProdiver = (props) => {
         .then((data) => setCartItems(data))
         .catch((error) => console.log(error));
     }
+
+    const fetchMenuList = async () => {
+      try {
+        const res = await fetch('http://localhost:4000/api/products/category');
+        const data = await res.json();
+        setMenuList(() => [...menuList, ...data]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchMenuList();
   }, []);
 
   const addToCartFn = (itemId) => {
@@ -89,6 +102,7 @@ const ShopContextProdiver = (props) => {
 
   const contextValue = {
     all_product,
+    menuList,
     cartItems,
     addToCartFn,
     removeFromCartFn,

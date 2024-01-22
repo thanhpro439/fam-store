@@ -5,14 +5,14 @@ import Item from '../Item/Item';
 function Popular() {
   const [popular, setPopular] = useState([]);
   useEffect(() => {
-    fetch('https://famstorebackend.onrender.com/popular')
+    fetch('http://localhost:4000/api/products/popular')
       .then((res) => res.json())
       .then((data) => setPopular(data));
   }, []);
 
   return (
     <div className="popular">
-      <h1>POPULAR IN WOMEN</h1>
+      <h1>MOST POPULAR</h1>
       <hr />
       <div className="popular-item">
         {popular?.map((item, index) => {
