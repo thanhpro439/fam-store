@@ -1,9 +1,11 @@
 import axios from 'axios';
-// import { env } from '../config/environment.js';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:4000/api/',
+  baseURL: BASE_URL,
   headers: {
+    Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });

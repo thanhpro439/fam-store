@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './ListProduct.css';
 import remove_icon from '../../assets/cross_icon.png';
+import productApi from '../../api/productApi';
 
 function ListProduct(props) {
   const [allProduct, setAllProduct] = useState([]);
 
   const fetchInfo = async () => {
     try {
-      const res = await fetch(
-        'https://backend-lpgv.onrender.com/api/products/allproducts'
-      );
-      const data = await res.json();
-      setAllProduct(data);
+      const res = await productApi.getAll();
+      const data = res.data;
+      setAllProduct(data.reverse());
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -20,27 +19,10 @@ function ListProduct(props) {
   const remove_product = async (id) => {
     try {
       // delete image of this product
-      await fetch('https://backend-lpgv.onrender.com/api/delete', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: id }),
-      });
+      await productApi.removeImage(id);
 
       // delete product in database
-      await fetch(
-        'https://backend-lpgv.onrender.com/api/products/removeproduct',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id: id }),
-        }
-      );
+      await productApi.removeProduct(id);
 
       // update list product
       await fetchInfo();

@@ -5,6 +5,7 @@ import upload_area from '../../assets/upload_area.svg';
 function AddProduct(props) {
   const [image, setImage] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const imageUploadHandle = (e) => {
     setImage(e.target.files[0]);
@@ -30,7 +31,7 @@ function AddProduct(props) {
     let formData = new FormData();
     formData.append('product', image);
 
-    await fetch('https://backend-lpgv.onrender.com/api/upload', {
+    await fetch(`${BASE_URL}/upload`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -39,12 +40,15 @@ function AddProduct(props) {
     })
       .then((res) => res.json())
       .then((data) => (resData = data))
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setIsAdding(false);
+        console.log(error);
+      });
 
     if (resData.success) {
       product.image = resData.data.secure_url;
       product.image_public_id = resData.data.public_id;
-      await fetch('https://backend-lpgv.onrender.com/api/products/addproduct', {
+      await fetch(`${BASE_URL}/products/addproduct`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
