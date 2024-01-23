@@ -7,9 +7,6 @@ import Product from './Pages/Product';
 import Shop from './Pages/Shop';
 import ShopCategory from './Pages/ShopCategory';
 import Footer from './Components/Footer/Footer';
-import men_banner from './Components/Assets/banner_mens.png';
-import women_banner from './Components/Assets/banner_women.png';
-import kids_banner from './Components/Assets/banner_kids.png';
 import { useContext } from 'react';
 import { ShopContext } from './Context/ShopContext';
 

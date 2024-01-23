@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import productApi from '../api/productApi';
 
 export const ShopContext = createContext(null);
 
@@ -8,12 +9,18 @@ const ShopContextProdiver = (props) => {
   const [menuList, setMenuList] = useState([]);
 
   useEffect(() => {
-    fetch('https://famstorebackend.onrender.com/allproducts')
-      .then((res) => res.json())
-      .then((data) => setAll_product(data));
+    const fetchAllProduct = async () => {
+      try {
+        const res = await productApi.getAll();
+        const data = res.data;
+        setAll_product(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
     if (localStorage.getItem('auth-token')) {
-      fetch('https://famstorebackend.onrender.com/getcart', {
+      fetch(`http://localhost:4000/api/getcart`, {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -26,9 +33,11 @@ const ShopContextProdiver = (props) => {
         .catch((error) => console.log(error));
     }
 
+    fetchAllProduct();
+
     const fetchMenuList = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/products/category');
+        const res = await fetch(`http://localhost:4000/api/products/category`);
         const data = await res.json();
         setMenuList(() => [...menuList, ...data]);
       } catch (error) {
@@ -47,7 +56,7 @@ const ShopContextProdiver = (props) => {
 
     // check login or not
     if (localStorage.getItem('auth-token')) {
-      fetch('https://famstorebackend.onrender.com/addtocart', {
+      fetch('http://localhost:4000/api/addtocart', {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -71,7 +80,7 @@ const ShopContextProdiver = (props) => {
 
     // check login or not
     if (localStorage.getItem('auth-token')) {
-      fetch('https://famstorebackend.onrender.com/removefromcart', {
+      fetch('http://localhost:4000/api/removefromcart', {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',

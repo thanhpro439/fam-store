@@ -6,13 +6,13 @@ function NewCollections(props) {
   const [newCollections, setNewCollections] = useState([]);
 
   useEffect(() => {
-    fetch('https://famstorebackend.onrender.com/newcollection')
+    fetch(`http://localhost:4000/api/products/newcollection`)
       .then((res) => res.json())
       .then((data) => setNewCollections(data));
   }, []);
 
   return (
-    <div className="new-collections" id='new-collections'>
+    <div className="new-collections" id="new-collections">
       <h1>NEW COLLECTIONS</h1>
       <hr />
       <div className="new-collections-item">
