@@ -4,8 +4,10 @@ import Item from '../Item/Item';
 
 function Popular() {
   const [popular, setPopular] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   useEffect(() => {
-    fetch('http://localhost:4000/api/products/popular')
+    fetch(`${BASE_URL}/products/popular`)
       .then((res) => res.json())
       .then((data) => setPopular(data));
   }, []);
