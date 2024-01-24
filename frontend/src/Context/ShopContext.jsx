@@ -8,8 +8,8 @@ const ShopContextProdiver = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [all_product, setAll_product] = useState([]);
   const [menuList, setMenuList] = useState([]);
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchAllProduct = async () => {
@@ -67,7 +67,7 @@ const ShopContextProdiver = (props) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ itemId: itemId }),
-      })
+      });
     }
   };
 
@@ -89,7 +89,7 @@ const ShopContextProdiver = (props) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ itemId: itemId }),
-      })
+      });
     }
   };
 

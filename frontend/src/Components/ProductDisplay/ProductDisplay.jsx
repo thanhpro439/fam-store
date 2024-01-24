@@ -47,7 +47,9 @@ function ProductDisplay(props) {
           itaque incidunt labore officia! Consectetur velit officia incidunt
           tempora iste iusto dolorem.
         </div>
-        <div className="productdisplay-right-size">
+
+        {/* TODO add type */}
+        {/* <div className="productdisplay-right-size">
           <h1>Select Size</h1>
           <div className="sizes">
             <div>S</div>
@@ -56,7 +58,7 @@ function ProductDisplay(props) {
             <div>XL</div>
             <div>XXL</div>
           </div>
-        </div>
+        </div> */}
         <button
           onClick={() => {
             addToCartFn(product.id);

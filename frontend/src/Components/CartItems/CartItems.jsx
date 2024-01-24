@@ -3,9 +3,11 @@ import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import { Link } from 'react-router-dom';
+import { formatPrice } from '../../util';
 
 function CartItems(props) {
-  const { all_product, cartItems, removeFromCartFn, getTotalCartAmoutFn } = useContext(ShopContext);
+  const { all_product, cartItems, removeFromCartFn, getTotalCartAmoutFn } =
+    useContext(ShopContext);
 
   return (
     <div className="cart-items">
@@ -25,12 +27,20 @@ function CartItems(props) {
             <div key={e.id}>
               <div className="cart-items-format-main cart-items-format">
                 <Link to={`/product/${e.id}`}>
-                  <img className="cart-icon-product-icon" src={e.image} alt="" />{' '}
+                  <img
+                    className="cart-icon-product-icon"
+                    src={e.image}
+                    alt=""
+                  />{' '}
                 </Link>
                 <p>{e.name}</p>
-                <p className="cart-items-subtotal">{e.new_price}</p>
-                <button className="cart-items-quantity">{cartItems[e.id]}</button>
-                <p>{e.new_price * cartItems[e.id]}</p>
+                <p className="cart-items-subtotal">
+                  {formatPrice(e.new_price)}
+                </p>
+                <button className="cart-items-quantity">
+                  {cartItems[e.id]}
+                </button>
+                <p>{formatPrice(e.new_price * cartItems[e.id])}</p>
                 <img
                   className="cart-items-remove-icon"
                   src={remove_icon}
@@ -52,7 +62,7 @@ function CartItems(props) {
           <div>
             <div className="cart-items-total-items">
               <p>Subtotal</p>
-              <p>${getTotalCartAmoutFn(cartItems, all_product)}</p>
+              <p>{formatPrice(getTotalCartAmoutFn(cartItems, all_product))}đ</p>
             </div>
             <hr />
             <div className="cart-items-total-items">
@@ -62,7 +72,7 @@ function CartItems(props) {
             <hr />
             <div className="cart-items-total-items">
               <h3>Total</h3>
-              <h3>${getTotalCartAmoutFn()}</h3>
+              <h3>{formatPrice(getTotalCartAmoutFn())}đ</h3>
             </div>
             <button>PROCESS TO CHECKOUT</button>
           </div>
