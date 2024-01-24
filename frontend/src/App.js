@@ -12,16 +12,15 @@ import { ShopContext } from './Context/ShopContext';
 
 function App() {
   const { menuList } = useContext(ShopContext);
-
+  
   return (
     <div>
       <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<Shop />} />
-          <Route path="/shop" element={<Shop />} />
 
-          {menuList.map((item, index) => (
+          {menuList?.map((item, index) => (
             <Route
               key={index}
               path={`/${item.category}`}
@@ -35,7 +34,6 @@ function App() {
             <Route path=":productId" element={<Product />} />
           </Route>
 
-          
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginSignup />} />
         </Routes>

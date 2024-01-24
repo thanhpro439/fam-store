@@ -3,11 +3,11 @@ import './ProductDisplay.css';
 import star_icon from '../Assets/star_icon.png';
 import star_dull_icon from '../Assets/star_dull_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
+import { formatPrice } from '../../util';
 
 function ProductDisplay(props) {
   const { product } = props;
-  const {addToCartFn} = useContext(ShopContext)
-
+  const { addToCartFn } = useContext(ShopContext);
 
   return (
     <div className="product-display">
@@ -34,13 +34,18 @@ function ProductDisplay(props) {
           <p>(122)</p>
         </div>
         <div className="productdisplay-right-prices">
-          <div className="productdisplay-right-prices-old">${product.old_price}</div>
-          <div className="productdisplay-right-prices-new">${product.new_price}</div>
+          <div className="productdisplay-right-prices-old">
+            {formatPrice(product.old_price)}đ
+          </div>
+          <div className="productdisplay-right-prices-new">
+            {formatPrice(product.new_price)}đ
+          </div>
         </div>
         <div className="productdisplay-right-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis aliquid et consectetur
-          adipisci vitae, sequi ullam minima ratione, itaque incidunt labore officia! Consectetur
-          velit officia incidunt tempora iste iusto dolorem.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis
+          aliquid et consectetur adipisci vitae, sequi ullam minima ratione,
+          itaque incidunt labore officia! Consectetur velit officia incidunt
+          tempora iste iusto dolorem.
         </div>
         <div className="productdisplay-right-size">
           <h1>Select Size</h1>
@@ -52,7 +57,13 @@ function ProductDisplay(props) {
             <div>XXL</div>
           </div>
         </div>
-        <button onClick={()=>{addToCartFn(product.id)}}>ADD TO CARD</button>
+        <button
+          onClick={() => {
+            addToCartFn(product.id);
+          }}
+        >
+          ADD TO CARD
+        </button>
         <p className="productdisplay-right-category">
           <span>Category: </span> Women, T-Shirt, Crop top
         </p>

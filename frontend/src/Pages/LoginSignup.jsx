@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CSS/LoginSignUp.css';
+import axios from 'axios';
 
 function LoginSignup(props) {
   const [state, setState] = useState('Login');
@@ -15,16 +16,33 @@ function LoginSignup(props) {
 
   const login = async () => {
     let resData;
-    await fetch('https://famstorebackend.onrender.com/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/form-data',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => (resData = data));
+    // await fetch('https://famstorebackend.onrender.com/login', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/form-data',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => (resData = data));
+
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/api/users/login',
+        formData,
+        {
+          headers: {
+            Accept: 'application/form-data',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      resData = response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
 
     if (resData.success) {
       localStorage.setItem('auth-token', resData.token);
@@ -36,17 +54,33 @@ function LoginSignup(props) {
 
   const signup = async () => {
     let resData;
-    console.log(formData);
-    await fetch('https://famstorebackend.onrender.com/signup', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/form-data',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => (resData = data));
+    // await fetch('https://famstorebackend.onrender.com/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/form-data',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => (resData = data));
+
+    try {
+      const response = await axios.post(
+        'http://localhost:4000/api/users/signup',
+        formData,
+        {
+          headers: {
+            Accept: 'application/form-data',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      resData = response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
 
     if (resData.success) {
       localStorage.setItem('auth-token', resData.token);

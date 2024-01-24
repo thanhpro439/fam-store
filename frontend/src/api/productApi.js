@@ -6,9 +6,42 @@ const productApi = {
     return axiosClient.get(url);
   },
 
+  getCart(params) {
+    const url = '/cart/getcart';
+    return axiosClient.get(
+      url,
+      {},
+      {
+        headers: {
+          Accept: 'application/form-data',
+          'auth-token': params,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  },
+
+  getCategory() {
+    const url = '/products/category';
+    return axiosClient.get(url);
+  },
+
   add(data) {
     const url = '/products/addproduct';
     return axiosClient.post(url, data);
+  },
+
+  addToCart(data) {
+    const url = '/cart/addtocart';
+    return axiosClient.post(
+      url,
+      {},
+      {
+        Accept: 'application/form-data',
+        'auth-token': `${localStorage.getItem('auth-token')}`,
+        'Content-Type': 'application/json',
+      }
+    );
   },
 
   removeImage(id) {

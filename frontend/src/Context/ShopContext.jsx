@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import productApi from '../api/productApi';
+import axios from 'axios';
 
 export const ShopContext = createContext(null);
 
@@ -7,6 +8,8 @@ const ShopContextProdiver = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [all_product, setAll_product] = useState([]);
   const [menuList, setMenuList] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 
   useEffect(() => {
     const fetchAllProduct = async () => {
@@ -19,8 +22,10 @@ const ShopContextProdiver = (props) => {
       }
     };
 
+    fetchAllProduct();
+
     if (localStorage.getItem('auth-token')) {
-      fetch(`http://localhost:4000/api/getcart`, {
+      fetch(`${BASE_URL}/cart/getcart`, {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -33,13 +38,11 @@ const ShopContextProdiver = (props) => {
         .catch((error) => console.log(error));
     }
 
-    fetchAllProduct();
-
     const fetchMenuList = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/api/products/category`);
-        const data = await res.json();
-        setMenuList(() => [...menuList, ...data]);
+        const res = await productApi.getCategory();
+        const data = res.data;
+        setMenuList(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -56,7 +59,7 @@ const ShopContextProdiver = (props) => {
 
     // check login or not
     if (localStorage.getItem('auth-token')) {
-      fetch('http://localhost:4000/api/addtocart', {
+      fetch(`${BASE_URL}/cart/addtocart`, {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -65,8 +68,6 @@ const ShopContextProdiver = (props) => {
         },
         body: JSON.stringify({ itemId: itemId }),
       })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
     }
   };
 
@@ -80,7 +81,7 @@ const ShopContextProdiver = (props) => {
 
     // check login or not
     if (localStorage.getItem('auth-token')) {
-      fetch('http://localhost:4000/api/removefromcart', {
+      fetch(`${BASE_URL}/cart/removefromcart`, {
         method: 'POST',
         headers: {
           Accept: 'application/form-data',
@@ -89,8 +90,6 @@ const ShopContextProdiver = (props) => {
         },
         body: JSON.stringify({ itemId: itemId }),
       })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
     }
   };
 

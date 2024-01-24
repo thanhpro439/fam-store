@@ -6,7 +6,7 @@ import path from 'path';
 import cors from 'cors';
 import { env } from './config/environment.js';
 
-const port = 4000;
+const port = 5000;
 
 const app = express();
 
@@ -153,7 +153,7 @@ const Product = mongoose.model('Product', {
 });
 
 // Creating API for adding new product endpoint
-app.post('/addproduct', async (req, res) => {
+app.post('/api/products/addproduct', async (req, res) => {
   let products = await Product.find({});
   let id;
   if (products.length > 0) {
@@ -191,7 +191,7 @@ app.post('/addproduct', async (req, res) => {
 });
 
 // Creating API for removing product endpoint
-app.post('/removeproduct', async (req, res) => {
+app.post('/api/products/removeproduct', async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id })
     .then((result) => {
       if (result) {
@@ -214,7 +214,7 @@ app.post('/removeproduct', async (req, res) => {
 });
 
 // Creating API for getting all product endpoint
-app.get('/allproducts', async (req, res) => {
+app.get('/api/products/allproducts', async (req, res) => {
   Product.find()
     .then((products) => {
       res.send(products);
@@ -226,7 +226,7 @@ app.get('/allproducts', async (req, res) => {
 });
 
 // Creating API for getting new collection product endpoint
-app.get('/newcollection', async (req, res) => {
+app.get('/api/products/newcollection', async (req, res) => {
   try {
     let allproduct = await Product.find({});
     if (allproduct.length > 8) {
@@ -241,7 +241,7 @@ app.get('/newcollection', async (req, res) => {
 });
 
 // Creating API for getting popular women product endpoint
-app.get('/popular', async (req, res) => {
+app.get('/api/products/popular', async (req, res) => {
   try {
     let popularItems = await Product.find({ category: 'women' });
     if (popularItems.length > 4) {
@@ -270,6 +270,7 @@ const fetchUser = async (req, res, next) => {
     }
   }
 };
+
 // Creating endpoint for add to cart endpoint
 app.post('/addtocart', fetchUser, async (req, res) => {
   let userData = await Users.findOne({ _id: req.user.id });
