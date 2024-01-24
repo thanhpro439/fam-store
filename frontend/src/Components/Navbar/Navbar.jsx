@@ -7,7 +7,7 @@ import { ShopContext } from '../../Context/ShopContext';
 import nav_dropdown from '../Assets/nav_dropdown.png';
 
 function Navbar() {
-  const [menu, setMenu] = useState('shop');
+  const [menu, setMenu] = useState(localStorage.getItem('menu') || 'shop');
   const { menuList } = useContext(ShopContext);
 
   const { getTotalCartNumberFn } = useContext(ShopContext);
@@ -17,11 +17,22 @@ function Navbar() {
     menuRef.current.classList.toggle('nav-menu-visible');
   };
 
+  const saveMenu = (menu) => {
+    setMenu(menu);
+    localStorage.setItem('menu', menu);
+  };
+
   return (
     <div className="navbar">
       <div className="nav-logo">
         <Link to="/">
-          <img src={logo} alt="" />
+          <img
+            onClick={() => {
+              saveMenu('');
+            }}
+            src={logo}
+            alt=""
+          />
         </Link>
         <Link to="/">
           <p>Fam Store</p>
@@ -31,7 +42,7 @@ function Navbar() {
       <ul ref={menuRef} className="nav-menu">
         <li
           onClick={() => {
-            setMenu('shop');
+            saveMenu('shop');
             dropdownToggle();
           }}
         >
@@ -41,7 +52,7 @@ function Navbar() {
           <li
             key={index}
             onClick={() => {
-              setMenu(item.category);
+              saveMenu(item.category);
               dropdownToggle();
             }}
           >
@@ -50,7 +61,7 @@ function Navbar() {
           </li>
         ))}
       </ul>
-      
+
       <div className="nav-login-cart">
         {localStorage.getItem('auth-token') ? (
           <button
@@ -63,12 +74,24 @@ function Navbar() {
           </button>
         ) : (
           <Link to="/login">
-            <button>Login</button>
+            <button
+              onClick={() => {
+                saveMenu('');
+              }}
+            >
+              Login
+            </button>
           </Link>
         )}
 
         <Link to="/cart">
-          <img src={cart_icon} alt="" />
+          <img
+            onClick={() => {
+              saveMenu('');
+            }}
+            src={cart_icon}
+            alt=""
+          />
         </Link>
         <div className="nav-cart-count">{getTotalCartNumberFn()}</div>
       </div>

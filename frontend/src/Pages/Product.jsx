@@ -15,10 +15,9 @@ function Product(props) {
   if (!product || Object.keys(product).length === 0) {
     Object.assign(product, {
       id: 5,
-      name: 'Bộ sưu tập lót ly Naruto Shippuden Shinobi Bonds (Kỉ niệm 20 năm ra mắt)',
-      image:
-        'https://res.cloudinary.com/dgkcaez4q/image/upload/v1705914934/fam_store/bidlmdxm82xpwqiavw2g.jpg',
-      image_public_id: 'fam_store/bidlmdxm82xpwqiavw2g',
+      name: '',
+      image: '',
+      image_public_id: '',
       category: 'naruto',
       new_price: 69000,
       old_price: 79000,
