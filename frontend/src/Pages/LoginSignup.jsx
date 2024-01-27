@@ -29,7 +29,7 @@ function LoginSignup(props) {
 
     try {
       const response = await axios.post(
-        '/https://backend-lpgv.onrender.com/api/users/login',
+        'https://backend-lpgv.onrender.com/api/users/login',
         formData,
         {
           headers: {
