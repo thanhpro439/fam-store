@@ -29,7 +29,7 @@ function LoginSignup(props) {
 
     try {
       const response = await axios.post(
-        'http://localhost:4000/api/users/login',
+        '/https://backend-lpgv.onrender.com/apiusers/login',
         formData,
         {
           headers: {
@@ -67,7 +67,7 @@ function LoginSignup(props) {
 
     try {
       const response = await axios.post(
-        'http://localhost:4000/api/users/signup',
+        'https://backend-lpgv.onrender.com/api/users/signup',
         formData,
         {
           headers: {
