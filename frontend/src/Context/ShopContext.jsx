@@ -8,17 +8,21 @@ const ShopContextProdiver = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [all_product, setAll_product] = useState([]);
   const [menuList, setMenuList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchAllProduct = async () => {
       try {
+        setIsLoading(true);
         const res = await productApi.getAll();
         const data = res.data;
         setAll_product(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setIsLoading(false);
       }
     };
 
@@ -40,11 +44,14 @@ const ShopContextProdiver = (props) => {
 
     const fetchMenuList = async () => {
       try {
+        setIsLoading(true);
         const res = await productApi.getCategory();
         const data = res.data;
         setMenuList(data);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setIsLoading(false);
       }
     };
 
@@ -112,6 +119,7 @@ const ShopContextProdiver = (props) => {
     all_product,
     menuList,
     cartItems,
+    isLoading,
     addToCartFn,
     removeFromCartFn,
     getTotalCartAmoutFn,
