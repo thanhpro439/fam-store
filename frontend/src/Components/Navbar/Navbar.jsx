@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
@@ -21,6 +21,7 @@ function Navbar() {
 
   const [isSearchActive, setSearchActive] = useState(false);
   const [productName, setProductName] = useState('');
+  const inputRef = useRef(null);
 
   const toggleSearchInput = () => {
     setSearchActive(!isSearchActive);
@@ -36,6 +37,13 @@ function Navbar() {
       window.location.assign(`/search/${productName}`);
     }
   };
+
+  useEffect(() => {
+    if (isSearchActive) {
+      // Tự động đặt tiêu điểm khi ô input được hiển thị
+      inputRef.current.focus();
+    }
+  }, [isSearchActive]);
 
   return (
     <div className="navbar">
@@ -87,6 +95,8 @@ function Navbar() {
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
             onKeyDown={handleKeyPress}
+            autoFocus={isSearchActive}
+            ref={inputRef}
           />
           <img src={search_icon} alt="" onClick={toggleSearchInput} />
         </div>

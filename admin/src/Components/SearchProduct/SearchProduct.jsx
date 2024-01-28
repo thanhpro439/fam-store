@@ -9,6 +9,9 @@ function SearchProduct(props) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isSearchActive, setSearchActive] = useState(true);
+  const inputRef = useRef(null);
+
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const searchProduct = async () => {
@@ -52,6 +55,7 @@ function SearchProduct(props) {
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Enter product name"
           onKeyDown={handleKeyPress}
+          autoFocus
         />
         <button
           onClick={() => {
