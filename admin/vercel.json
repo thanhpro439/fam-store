@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/allproduct", "destination": "/index.html" },
+    { "source": "/addproduct", "destination": "/index.html" },
+    { "source": "/searchproduct", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
