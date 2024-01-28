@@ -69,14 +69,7 @@
   line-height: 0;
 }
 
-.nav-login-cart button {
-  width: 157px;
-  height: 58px;
-  outline: none;
-
-  border: 1px solid #7a7a7a;
-  border-radius: 75px;
-
+.nav-login-cart .login-signup {
   color: #515151;
   font-size: 20px;
   font-weight: 500;
@@ -85,8 +78,13 @@
   cursor: pointer;
 }
 
-.nav-login-cart button:active {
+.nav-login-cart .login-signup:active {
   background-color: #f3f3f3;
+}
+
+.login-signup img {
+  width: 40px;
+  aspect-ratio: 1/1;
 }
 
 .nav-login-cart .nav-cart-count {
@@ -98,7 +96,7 @@
   align-items: center;
 
   margin-top: -35px;
-  margin-left: -60px;
+  margin-left: -140px;
 
   border-radius: 11px;
   font-size: 14px;
@@ -109,6 +107,50 @@
 
 .nav-login-cart img {
   cursor: pointer;
+}
+
+.search-bar {
+  display: flex;
+  position: relative;
+}
+
+.search-bar img {
+  width: 42px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+.search-bar input {
+  background: white;
+  border: none;
+  outline: none;
+  position: absolute;
+
+  top: 71px;
+  right: 8px;
+  width: 230px;
+  height: 32px;
+
+  padding: 30px 20px;
+  font-size: 20px;
+  color: #626262;
+  display: none;
+}
+
+.search-bar input.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 1366px) {
@@ -129,18 +171,24 @@
     font-size: 16px;
   }
 
+  .search-bar input {
+    top: 55px;
+    font-size: 16px;
+  }
+
   .nav-login-cart {
     gap: 30px;
   }
 
-  .nav-login-cart button {
-    width: 120px;
-    height: 50px;
+  .nav-login-cart .login-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
   }
 
   .nav-login-cart .nav-cart-count {
-    margin-left: -44px;
+    margin-left: -110px;
     font-size: 14px;
   }
 }
@@ -155,10 +203,14 @@
     font-size: 14px;
   }
 
-  .nav-login-cart button {
-    width: 100px;
-    height: 40px;
+  .nav-login-cart .login-signup {
     font-size: 14px;
+  }
+
+  .search-bar input {
+    top: 47px;
+    font-size: 14px;
+    padding: 20px;
   }
 
   .nav-login-cart img {
@@ -166,11 +218,12 @@
   }
 
   .nav-login-cart .nav-cart-count {
+    font-size: 12px;
     width: 18px;
     height: 18px;
     font-size: 12px;
-    margin-left: -40px;
-    margin-top: -30px;
+    margin-left: -100px;
+    margin-top: -28px;
   }
 }
 
@@ -203,7 +256,7 @@
     align-items: center;
     justify-content: center;
 
-    top: 67px;
+    top: 64px;
     right: 0;
     width: 240px;
     height: 200px;
@@ -213,6 +266,10 @@
 
   .nav-menu-visible {
     display: flex;
+  }
+
+  .nav-login-cart {
+    margin-right: 40px;
   }
 }
 
@@ -227,9 +284,7 @@
     font-size: 18px;
   }
 
-  .nav-login-cart button {
-    width: 64px;
-    height: 36px;
+  .nav-login-cart .login-signup {
     font-size: 14px;
   }
 
@@ -239,14 +294,21 @@
 
   .nav-login-cart {
     gap: 10px;
+    margin-right: 20px;
   }
 
   .nav-login-cart .nav-cart-count {
-    margin-left: -20px;
+    margin-left: -60px;
     margin-top: -26px;
   }
 
   .nav-dropdown {
     margin-left: 10px;
+  }
+
+  .search-bar input.active {
+    width: 200px;
+    top: 47px;
+    right: -133px;
   }
 }

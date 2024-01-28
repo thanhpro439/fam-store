@@ -10,6 +10,8 @@ function LoginSignup(props) {
     password: '',
   });
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const changeHandle = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,16 +30,12 @@ function LoginSignup(props) {
     //   .then((data) => (resData = data));
 
     try {
-      const response = await axios.post(
-        'https://backend-lpgv.onrender.com/api/users/login',
-        formData,
-        {
-          headers: {
-            Accept: 'application/form-data',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/users/login`, formData, {
+        headers: {
+          Accept: 'application/form-data',
+          'Content-Type': 'application/json',
+        },
+      });
 
       resData = response.data;
     } catch (error) {
@@ -66,16 +64,12 @@ function LoginSignup(props) {
     //   .then((data) => (resData = data));
 
     try {
-      const response = await axios.post(
-        'https://backend-lpgv.onrender.com/api/users/signup',
-        formData,
-        {
-          headers: {
-            Accept: 'application/form-data',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/users/signup`, formData, {
+        headers: {
+          Accept: 'application/form-data',
+          'Content-Type': 'application/json',
+        },
+      });
 
       resData = response.data;
     } catch (error) {

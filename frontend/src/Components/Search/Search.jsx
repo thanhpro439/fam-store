@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
-import './SearchProduct.css';
-import remove_icon from '../../assets/cross_icon.png';
+import React, { useEffect, useState } from 'react';
 import { formatPrice } from '../../util';
+import { Link, useParams } from 'react-router-dom';
+import './Search.css';
 
-function SearchProduct(props) {
-  const [searchTerm, setSearchTerm] = useState('');
+function Search(props) {
+  const { productName } = useParams();
+  const [searchTerm, setSearchTerm] = useState(productName);
   const [products, setProducts] = useState([]);
 
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchProduct();
+    }
+  };
 
   const searchProduct = async () => {
     try {
@@ -31,11 +38,17 @@ function SearchProduct(props) {
     }
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
+
+  useEffect(() => {
+    if (productName) {
       searchProduct();
     }
-  };
+  }, []);
 
   return (
     <div className="searchproduct">
@@ -67,7 +80,6 @@ function SearchProduct(props) {
               <p>Old Price</p>
               <p>New Price</p>
               <p>Category</p>
-              <p>Remove</p>
             </div>
             <div className=" listproduct-allproduct">
               <hr key="hr" />
@@ -77,23 +89,19 @@ function SearchProduct(props) {
                     key={index}
                     className="listproduct-format-main listproduct-format"
                   >
-                    <img
-                      src={product.image}
-                      alt=""
-                      className="listproduct-product-image"
-                    />
+                    <Link to={`/product/${product.id}`}>
+                      <img
+                        onClick={scrollToTop}
+                        src={product.image}
+                        alt=""
+                        className="listproduct-product-image"
+                      />
+                    </Link>
+
                     <p>{product.name}</p>
                     <p>{product.old_price}đ</p>
                     <p>{product.new_price}đ</p>
                     <p>{product.category}</p>
-                    <img
-                      src={remove_icon}
-                      alt=""
-                      className="listproduct-remove-icon"
-                      onClick={() => {
-                        remove_product(product.id);
-                      }}
-                    />
                   </div>
                 );
               })}
@@ -105,4 +113,4 @@ function SearchProduct(props) {
   );
 }
 
-export default SearchProduct;
+export default Search;

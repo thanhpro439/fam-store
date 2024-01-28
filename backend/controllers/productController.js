@@ -1,4 +1,4 @@
-import Product from "../models/productModel.js";
+import Product from '../models/productModel.js';
 
 export const addProduct = async (req, res) => {
   // Controller logic for adding a new product
@@ -24,7 +24,7 @@ export const addProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Internal Server Error",
+      error: 'Internal Server Error',
     });
   }
 };
@@ -42,12 +42,12 @@ export const removeProduct = async (req, res) => {
     } else {
       res.json({
         success: false,
-        error: "Product not found.",
+        error: 'Product not found.',
       });
     }
   } catch (error) {
     res.status(500).json({
-      error: "Internal Server Error",
+      error: 'Internal Server Error',
     });
   }
 };
@@ -59,7 +59,7 @@ export const getAllProducts = async (req, res) => {
     res.send(products);
   } catch (error) {
     res.status(500).send({
-      error: "Internal Server Error",
+      error: 'Internal Server Error',
     });
   }
 };
@@ -73,7 +73,7 @@ export const getNewCollection = async (req, res) => {
     res.send(newCollection);
   } catch (error) {
     res.status(500).send({
-      error: "Internal Server Error",
+      error: 'Internal Server Error',
     });
   }
 };
@@ -81,13 +81,13 @@ export const getNewCollection = async (req, res) => {
 export const getPopularProducts = async (req, res) => {
   // Controller logic for getting popular women products
   try {
-    const popularItems = await Product.find({ category: "naruto" });
+    const popularItems = await Product.find({ category: 'naruto' });
     const popular =
       popularItems.length > 4 ? popularItems.slice(0, 4) : popularItems;
     res.send(popular);
   } catch (error) {
     res.status(500).send({
-      error: "Internal Server Error",
+      error: 'Internal Server Error',
     });
   }
 };
@@ -95,15 +95,15 @@ export const getPopularProducts = async (req, res) => {
 export const getCategory = async (req, res) => {
   try {
     const categories = await Product.aggregate([
-      { $group: { _id: "$category", count: { $sum: 1 } } },
-      { $project: { _id: 0, category: "$_id", count: 1 } },
+      { $group: { _id: '$category', count: { $sum: 1 } } },
+      { $project: { _id: 0, category: '$_id', count: 1 } },
       { $sort: { category: 1 } },
     ]).exec();
 
     res.send(categories);
   } catch (error) {
-    console.error("Lỗi khi truy xuất category:", error);
-    res.status(500).json({ error: "Lỗi khi truy xuất dữ liệu" });
+    console.error('Lỗi khi truy xuất category:', error);
+    res.status(500).json({ error: 'Lỗi khi truy xuất dữ liệu' });
   }
 };
 
@@ -112,16 +112,16 @@ export const searchProductByName = async (req, res) => {
 
   try {
     const products = await Product.find({
-      name: { $regex: productName, $options: "i" },
+      name: { $regex: productName, $options: 'i' },
     });
 
     if (products.length > 0) {
       res.json(products);
     } else {
-      res.status(404).json({ error: "Product not found!" });
+      res.status(404).json({ error: 'Không tìm thấy sản phẩm!' });
     }
   } catch (error) {
-    console.error("Lỗi khi truy xuất sản phẩm:", error);
-    res.status(500).json({ error: "Lỗi khi truy xuất dữ liệu" });
+    console.error('Lỗi khi truy xuất sản phẩm:', error);
+    res.status(500).json({ error: 'Lỗi khi truy xuất dữ liệu' });
   }
 };

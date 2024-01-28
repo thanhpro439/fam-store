@@ -4,16 +4,15 @@ import Navbar from './Components/Navbar/Navbar';
 import Cart from './Pages/Cart';
 import LoginSignup from './Pages/LoginSignup';
 import Product from './Pages/Product';
-import Sketelon from './Components/Sketelon/Sketelon';
 import Shop from './Pages/Shop';
 import ShopCategory from './Pages/ShopCategory';
 import Footer from './Components/Footer/Footer';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { ShopContext } from './Context/ShopContext';
+import Search from './Components/Search/Search';
 
 function App() {
   const { menuList } = useContext(ShopContext);
-
   return (
     <div>
       <BrowserRouter>
@@ -37,6 +36,10 @@ function App() {
 
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginSignup />} />
+          <Route path="/login" element={<LoginSignup />} />
+          <Route path="/search" element={<Search />}>
+            <Route path=":productName" element={<Search />} />
+          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>

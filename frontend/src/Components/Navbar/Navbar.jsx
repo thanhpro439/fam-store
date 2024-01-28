@@ -5,6 +5,8 @@ import cart_icon from '../Assets/cart_icon.png';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../../Context/ShopContext';
 import nav_dropdown from '../Assets/nav_dropdown.png';
+import default_avatar from '../Assets/default_avatar.png';
+import search_icon from '../Assets/search_icon.png';
 
 function Navbar() {
   const [menu, setMenu] = useState(localStorage.getItem('menu') || 'shop');
@@ -17,9 +19,22 @@ function Navbar() {
     menuRef.current.classList.toggle('nav-menu-visible');
   };
 
+  const [isSearchActive, setSearchActive] = useState(false);
+  const [productName, setProductName] = useState('');
+
+  const toggleSearchInput = () => {
+    setSearchActive(!isSearchActive);
+  };
+
   const saveMenu = (menu) => {
     setMenu(menu);
     localStorage.setItem('menu', menu);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      window.location.assign(`/search/${productName}`);
+    }
   };
 
   return (
@@ -63,26 +78,18 @@ function Navbar() {
       </ul>
 
       <div className="nav-login-cart">
-        {localStorage.getItem('auth-token') ? (
-          <button
-            onClick={() => {
-              localStorage.removeItem('auth-token');
-              window.location.replace('/');
-            }}
-          >
-            Logout
-          </button>
-        ) : (
-          <Link to="/login">
-            <button
-              onClick={() => {
-                saveMenu('');
-              }}
-            >
-              Login
-            </button>
-          </Link>
-        )}
+        <div className="search-bar">
+          <input
+            type="search"
+            name="search"
+            placeholder="Search Product"
+            className={`${isSearchActive ? 'active' : ''}`}
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            onKeyDown={handleKeyPress}
+          />
+          <img src={search_icon} alt="" onClick={toggleSearchInput} />
+        </div>
 
         <Link to="/cart">
           <img
@@ -93,6 +100,30 @@ function Navbar() {
             alt=""
           />
         </Link>
+
+        {localStorage.getItem('auth-token') ? (
+          <div
+            className="login-signup"
+            onClick={() => {
+              localStorage.removeItem('auth-token');
+              window.location.replace('/');
+            }}
+          >
+            <img src={default_avatar} alt="" />
+          </div>
+        ) : (
+          <Link to="/login">
+            <div
+              className="login-signup"
+              onClick={() => {
+                saveMenu('');
+              }}
+            >
+              <img src={default_avatar} alt="" />
+            </div>
+          </Link>
+        )}
+
         <div className="nav-cart-count">{getTotalCartNumberFn()}</div>
       </div>
 
