@@ -1,7 +1,7 @@
 import React from 'react';
 import './Admin.css';
 import Sidebar from '../../Components/Sidebar/Sidebar';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddProduct from '../../Components/AddProduct/AddProduct';
 import ListProduct from '../../Components/ListProduct/ListProduct';
 import SearchProduct from '../../Components/SearchProduct/SearchProduct';
@@ -10,6 +10,7 @@ function Admin(props) {
   return (
     <div className="admin">
       <Sidebar />
+
       <Routes>
         <Route path="/" element={<AddProduct />} />
         <Route path="/addproduct" element={<AddProduct />} />
