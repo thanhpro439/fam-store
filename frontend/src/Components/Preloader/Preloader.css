@@ -1,12 +1,10 @@
 :root {
   --hue: 223;
-  --bg: white;
   --fg: black;
   --primary: hsl(var(--hue), 90%, 55%);
   --trans-dur: 0.3s;
 }
 body {
-  background-color: var(--bg);
   color: black;
   place-items: center;
   transition: background-color var(--trans-dur), color var(--trans-dur);

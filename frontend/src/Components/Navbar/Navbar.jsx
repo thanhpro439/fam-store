@@ -19,17 +19,24 @@ function Navbar() {
     menuRef.current.classList.toggle('nav-menu-visible');
   };
 
-  const [isSearchActive, setSearchActive] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [productName, setProductName] = useState('');
   const inputRef = useRef(null);
+  const username = localStorage.getItem('username')
+    ? localStorage.getItem('username')[0]
+    : '';
 
-  const toggleSearchInput = () => {
-    setSearchActive(!isSearchActive);
+  const toggleSearchActive = () => {
+    setIsSearchActive(!isSearchActive);
+  };
+  const toggleLoginActive = () => {
+    setIsLogin(!isLogin);
   };
 
   const saveMenu = (menu) => {
-    setMenu(menu);
     localStorage.setItem('menu', menu);
+    setMenu(menu);
   };
 
   const handleKeyPress = (event) => {
@@ -47,15 +54,14 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="nav-logo">
+      <div
+        className="nav-logo"
+        onClick={() => {
+          saveMenu('');
+        }}
+      >
         <Link to="/">
-          <img
-            onClick={() => {
-              saveMenu('');
-            }}
-            src={logo}
-            alt=""
-          />
+          <img src={logo} alt="" />
         </Link>
         <Link to="/">
           <p>Fam Store</p>
@@ -98,7 +104,7 @@ function Navbar() {
             autoFocus={isSearchActive}
             ref={inputRef}
           />
-          <img src={search_icon} alt="" onClick={toggleSearchInput} />
+          <img src={search_icon} alt="" onClick={toggleSearchActive} />
         </div>
 
         <Link to="/cart">
@@ -112,14 +118,19 @@ function Navbar() {
         </Link>
 
         {localStorage.getItem('auth-token') ? (
-          <div
-            className="login-signup"
-            onClick={() => {
-              localStorage.removeItem('auth-token');
-              window.location.replace('/');
-            }}
-          >
-            <img src={default_avatar} alt="" />
+          <div className="login-signup" onClick={toggleLoginActive}>
+            {/* <img src={default_avatar} alt="" /> */}
+            <div className="user">{username}</div>
+            <div
+              className={`login-signup-logout ${isLogin ? 'active' : ''}`}
+              onClick={() => {
+                localStorage.removeItem('auth-token');
+                localStorage.removeItem('username');
+                window.location.replace('/');
+              }}
+            >
+              Logout
+            </div>
           </div>
         ) : (
           <Link to="/login">

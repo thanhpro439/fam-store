@@ -44,6 +44,7 @@ function LoginSignup(props) {
 
     if (resData.success) {
       localStorage.setItem('auth-token', resData.token);
+      localStorage.setItem('username', resData.username);
       window.location.replace('/');
     } else {
       alert(resData.error);

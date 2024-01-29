@@ -1,6 +1,5 @@
-import jwt from "jsonwebtoken";
-import Users from "../models/userModel.js";
-
+import jwt from 'jsonwebtoken';
+import Users from '../models/userModel.js';
 
 export const signUp = async (req, res) => {
   // Controller logic for user signup
@@ -8,7 +7,7 @@ export const signUp = async (req, res) => {
   if (check) {
     return res.status(400).json({
       success: false,
-      error: "Existing user!",
+      error: 'Existing user!',
     });
   }
   let cart = { 0: 0 };
@@ -28,7 +27,7 @@ export const signUp = async (req, res) => {
     },
   };
 
-  const token = jwt.sign(data, "secret_ecom");
+  const token = jwt.sign(data, 'secret_ecom');
   res.json({ success: true, token });
 };
 
@@ -44,12 +43,12 @@ export const login = async (req, res) => {
         },
       };
 
-      const token = jwt.sign(data, "secret_ecom");
-      res.json({ success: true, token });
+      const token = jwt.sign(data, 'secret_ecom');
+      res.json({ success: true, token, username: user.username });
     } else {
-      res.json({ success: false, error: "Wrong Password" });
+      res.json({ success: false, error: 'Wrong Password' });
     }
   } else {
-    res.json({ sucess: false, error: "Wrong email ID" });
+    res.json({ sucess: false, error: 'Wrong email ID' });
   }
 };
