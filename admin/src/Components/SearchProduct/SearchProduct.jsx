@@ -10,7 +10,6 @@ function SearchProduct(props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [isSearchActive, setSearchActive] = useState(true);
-  const inputRef = useRef(null);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
